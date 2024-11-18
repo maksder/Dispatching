@@ -1,5 +1,8 @@
 ﻿namespace Dispatching.Domain.CircuitBoards;
 
+/// <summary>
+/// Представляет репозиторий плат.
+/// </summary>
 public interface ICircuitBoardRepository
 {
 	#region Overridable
@@ -7,7 +10,7 @@ public interface ICircuitBoardRepository
 	/// Добавляет плату.
 	/// </summary>
 	/// <param name="circuitBoard"></param>
-	Task<int> Add(CircuitBoard circuitBoard);
+	void Add(CircuitBoard circuitBoard);
 
 	/// <summary>
 	/// Возвращает плату по идентификатору.

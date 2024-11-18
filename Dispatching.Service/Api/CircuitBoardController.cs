@@ -1,4 +1,4 @@
-﻿using Dispatching.Service.UseCase;
+﻿using Dispatching.Service.UseCase.Create;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

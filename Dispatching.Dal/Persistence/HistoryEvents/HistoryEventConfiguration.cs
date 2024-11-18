@@ -21,6 +21,8 @@ public class HistoryEventConfiguration : IEntityTypeConfiguration<HistoryEvent>
 			   .HasColumnName("description");
 		builder.Property(p => p.CreatedDateTime)
 			   .HasColumnName("created_date_time");
+		builder.Property("_participants")
+			   .HasColumnName("participants");
 	}
 	#endregion
 }

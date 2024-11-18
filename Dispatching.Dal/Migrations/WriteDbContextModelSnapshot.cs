@@ -63,6 +63,11 @@ namespace Dispatching.Dal.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
+                    b.Property<Guid[]>("_participants")
+                        .IsRequired()
+                        .HasColumnType("uuid[]")
+                        .HasColumnName("participants");
+
                     b.HasKey("Id");
 
                     b.ToTable("history_events", (string)null);

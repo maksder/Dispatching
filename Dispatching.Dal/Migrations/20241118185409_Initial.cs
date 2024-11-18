@@ -31,7 +31,8 @@ namespace Dispatching.Dal.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     created_date_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false)
+                    description = table.Column<string>(type: "text", nullable: false),
+                    participants = table.Column<Guid[]>(type: "uuid[]", nullable: false)
                 },
                 constraints: table =>
                 {

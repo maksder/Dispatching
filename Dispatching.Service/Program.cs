@@ -1,7 +1,9 @@
 using System.Reflection;
 using Dispatching.Dal;
 using Dispatching.Dal.Persistence.CircuitBoards;
+using Dispatching.Dal.Persistence.HistoryEvents;
 using Dispatching.Domain.CircuitBoards;
+using Dispatching.Domain.History;
 using Dispatching.Service;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +11,14 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
-//services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
 services.AddDbContext<WriteDbContext>();
-services.AddMediatR(Assembly.GetExecutingAssembly());
 services.AddScoped<ICircuitBoardRepository, CircuitBoardRepository>();
+services.AddScoped<IHistoryEventRepository, HistoryEventRepository>();
+services.AddScoped<UnitOfWork<WriteDbContext>>();
+services.AddMediatR(Assembly.GetExecutingAssembly());
 services.AddControllers();
+services.AddSwaggerGen();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -35,7 +39,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting()
    .UseEndpoints(t => t.MapControllers());
-app.UseCors(t => t.AllowAnyOrigin());
-//app.UseHttpsRedirection();
+//app.UseCors(t => t.AllowAnyOrigin());
 
 app.Run();

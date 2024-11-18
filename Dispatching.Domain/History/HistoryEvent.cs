@@ -7,12 +7,14 @@ namespace Dispatching.Domain.History;
 /// </summary>
 public class HistoryEvent : IEntity
 {
+	private readonly Guid[] _participants;
 	#region .ctor
-	public HistoryEvent(Guid id, string description)
+	public HistoryEvent(Guid id, string description, Guid[] participants)
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(description);
 		Id = id;
 		Description = description;
+		_participants = participants;
 		CreatedDateTime = DateTime.UtcNow;
 	}
 	#endregion
@@ -25,6 +27,8 @@ public class HistoryEvent : IEntity
 	{
 		get;
 	}
+
+	public IReadOnlyCollection<Guid> Participants => _participants;
 
 	/// <summary>
 	/// Возвращает описание события.

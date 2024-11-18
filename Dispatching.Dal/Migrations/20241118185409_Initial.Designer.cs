@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dispatching.Dal.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20241117143306_Initial")]
+    [Migration("20241118185409_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -65,6 +65,11 @@ namespace Dispatching.Dal.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
+
+                    b.Property<Guid[]>("_participants")
+                        .IsRequired()
+                        .HasColumnType("uuid[]")
+                        .HasColumnName("participants");
 
                     b.HasKey("Id");
 

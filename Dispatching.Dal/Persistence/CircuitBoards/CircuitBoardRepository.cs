@@ -28,10 +28,9 @@ public class CircuitBoardRepository : ICircuitBoardRepository
 
 	#region ICircuitBoardRepository members
 	/// <inheritdoc />
-	public async Task<int> Add(CircuitBoard circuitBoard)
+	public void Add(CircuitBoard circuitBoard)
 	{
 		_dbContext.CircuitBoards.Add(circuitBoard);
-		return await _dbContext.SaveChangesAsync();
 	}
 
 	/// <inheritdoc />
