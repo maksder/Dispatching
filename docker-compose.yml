@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: test
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /data/test
+    ports:
+      - "5432:5432"
+    networks:
+      - test          
+    
+networks:
+  test:
+    name: test
+    driver: bridge
+  
+volumes:
+  postgres-db:
+    driver: local
