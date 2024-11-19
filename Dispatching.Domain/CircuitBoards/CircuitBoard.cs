@@ -93,7 +93,7 @@ public class CircuitBoard : IEntity
 	/// <exception cref="BusinessException">Если плата в неподходящем статусе.</exception>
 	public void MakeQualityControl()
 	{
-		if (Status != CircuitBoardStatus.InWorking || Status != CircuitBoardStatus.InRepair)
+		if (Status != CircuitBoardStatus.InWorking && Status != CircuitBoardStatus.InRepair)
 		{
 			throw new BusinessException($"Невозможно произвести контроль качества для платы {Name}. Причина: плата {ErrorHelper.GetStatusNameForError(Status)}.");
 		}

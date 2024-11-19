@@ -44,7 +44,7 @@ public class MakeQualityControlForCircuitBoardCommandHandler : IRequestHandler<M
 	{
 		var circuitBoard = await CircuitBoardFindHelper.GetCircuitBoardAsync(request.CircuitBoardId, _circuitBoardRepository);
 		circuitBoard!.MakeQualityControl();
-		_historyEventRepository.Add(new HistoryEvent(Guid.NewGuid(), $"Плата {circuitBoard.Name} произведен контроль качества.", [circuitBoard.Id]));
+		_historyEventRepository.Add(new HistoryEvent(Guid.NewGuid(), $"Для платы {circuitBoard.Name} произведен контроль качества.", [circuitBoard.Id]));
 		await _unitOfWork.CommitAsync(cancellationToken);
 		return Unit.Value;
 	}

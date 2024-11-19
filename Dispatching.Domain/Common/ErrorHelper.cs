@@ -21,6 +21,8 @@ public class ErrorHelper
 			CircuitBoardStatus.Created => "создана",
 			CircuitBoardStatus.InWorking => "в работе",
 			CircuitBoardStatus.Packed => "упакована",
+			CircuitBoardStatus.InQualityControl => "на контроле качества",
+			CircuitBoardStatus.InRepair => "в ремонте",
 			_ => throw new ArgumentOutOfRangeException(nameof(status), status, null)
 		};
 	}

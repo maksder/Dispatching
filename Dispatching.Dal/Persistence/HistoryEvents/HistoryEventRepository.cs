@@ -1,4 +1,5 @@
 ﻿using Dispatching.Domain.History;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dispatching.Dal.Persistence.HistoryEvents;
 
@@ -34,7 +35,8 @@ public class HistoryEventRepository : IHistoryEventRepository
 
 	/// <inheritdoc />
 	public IEnumerable<HistoryEvent> FindByParticipants(Guid participantId) =>
-		_dbContext.HistoryEvents.Where(p => p.Participants.Any(t => t == participantId))
+		_dbContext.HistoryEvents.Where(p => EF.Property<Guid[]>(p, "_participants")
+											  .Any(t => t == participantId))
 				  .OrderBy(p => p.CreatedDateTime)
 				  .ToList();
 	#endregion
