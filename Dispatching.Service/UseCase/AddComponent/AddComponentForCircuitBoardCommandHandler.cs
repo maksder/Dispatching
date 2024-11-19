@@ -9,7 +9,7 @@ namespace Dispatching.Service.UseCase.AddComponent;
 /// <summary>
 /// Представляет обработчик команды <see cref="AddComponentForCircuitBoardCommand" />.
 /// </summary>
-public class AddComponentForCircuitBoardCommandHandler : IRequestHandler<AddComponentForCircuitBoardCommand, bool>
+public class AddComponentForCircuitBoardCommandHandler : IRequestHandler<AddComponentForCircuitBoardCommand>
 {
 	#region Data
 	#region Fields
@@ -40,14 +40,14 @@ public class AddComponentForCircuitBoardCommandHandler : IRequestHandler<AddComp
 
 	#region IRequestHandler<CreateCircuitBoardCommand,Guid> members
 	/// <inheritdoc />
-	public async Task<bool> Handle(AddComponentForCircuitBoardCommand request, CancellationToken cancellationToken)
+	public async Task<Unit> Handle(AddComponentForCircuitBoardCommand request, CancellationToken cancellationToken)
 	{
 		var componentId = Guid.NewGuid();
 		var circuitBoard = await CircuitBoardFindHelper.GetCircuitBoardAsync(request.CircuitBoardId, _circuitBoardRepository);
 		circuitBoard!.AddComponent(new CircuitBoardComponent(Guid.NewGuid(), request.ComponentName));
 		_historyEventRepository.Add(new HistoryEvent(Guid.NewGuid(), $"На плату {circuitBoard.Name} добавлен компонент {request.ComponentName}.", [circuitBoard.Id, componentId]));
 		await _unitOfWork.CommitAsync(cancellationToken);
-		return true;
+		return Unit.Value;
 	}
 	#endregion
 }

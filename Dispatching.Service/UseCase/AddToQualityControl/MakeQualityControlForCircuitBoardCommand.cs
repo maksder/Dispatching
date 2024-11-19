@@ -5,7 +5,7 @@ namespace Dispatching.Service.UseCase.AddToQualityControl;
 /// <summary>
 /// Представляет команду проведения контроль качества для платы.
 /// </summary>
-public class MakeQualityControlForCircuitBoardCommand : IRequest<bool>
+public class MakeQualityControlForCircuitBoardCommand : IRequest
 {
 	#region .ctor
 	/// <summary>

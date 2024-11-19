@@ -9,7 +9,7 @@ namespace Dispatching.Service.UseCase.Pack;
 /// <summary>
 /// Представляет обработчик команды <see cref="PackCircuitBoardCommandHandler" />.
 /// </summary>
-public class PackCircuitBoardCommandHandler : IRequestHandler<PackCircuitBoardCommand, bool>
+public class PackCircuitBoardCommandHandler : IRequestHandler<PackCircuitBoardCommand>
 {
 	#region Data
 	#region Fields
@@ -38,13 +38,13 @@ public class PackCircuitBoardCommandHandler : IRequestHandler<PackCircuitBoardCo
 
 	#region IRequestHandler<SetQualityControlResultForCircuitBoardCommand,Unit> members
 	/// <inheritdoc />
-	public async Task<bool> Handle(PackCircuitBoardCommand request, CancellationToken cancellationToken)
+	public async Task<Unit> Handle(PackCircuitBoardCommand request, CancellationToken cancellationToken)
 	{
 		var circuitBoard = await CircuitBoardFindHelper.GetCircuitBoardAsync(request.CircuitBoardId, _circuitBoardRepository);
 		circuitBoard!.Pack();
 		_historyEventRepository.Add(new HistoryEvent(Guid.NewGuid(), $"Произведен упаковка платы {circuitBoard.Name}.", [circuitBoard.Id]));
 		await _unitOfWork.CommitAsync(cancellationToken);
-		return true;
+		return Unit.Value;
 	}
 	#endregion
 }

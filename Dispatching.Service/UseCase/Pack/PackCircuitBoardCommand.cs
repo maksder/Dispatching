@@ -5,7 +5,7 @@ namespace Dispatching.Service.UseCase.Pack;
 /// <summary>
 /// Представляет команду упаковки платы.
 /// </summary>
-public class PackCircuitBoardCommand : IRequest<bool>
+public class PackCircuitBoardCommand : IRequest
 {
 	#region .ctor
 	/// <summary>

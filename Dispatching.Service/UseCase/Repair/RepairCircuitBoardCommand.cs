@@ -5,7 +5,7 @@ namespace Dispatching.Service.UseCase.Repair;
 /// <summary>
 /// Представляет команду проведения ремонта платы.
 /// </summary>
-public class RepairCircuitBoardCommand : IRequest<bool>
+public class RepairCircuitBoardCommand : IRequest
 {
 	#region .ctor
 	/// <summary>

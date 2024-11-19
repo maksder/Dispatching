@@ -9,7 +9,7 @@ namespace Dispatching.Service.UseCase.Repair;
 /// <summary>
 /// Представляет обработчик команды <see cref="RepairCircuitBoardCommandHandler" />.
 /// </summary>
-public class RepairCircuitBoardCommandHandler : IRequestHandler<RepairCircuitBoardCommand, bool>
+public class RepairCircuitBoardCommandHandler : IRequestHandler<RepairCircuitBoardCommand>
 {
 	#region Data
 	#region Fields
@@ -38,13 +38,13 @@ public class RepairCircuitBoardCommandHandler : IRequestHandler<RepairCircuitBoa
 
 	#region IRequestHandler<SetQualityControlResultForCircuitBoardCommand,Unit> members
 	/// <inheritdoc />
-	public async Task<bool> Handle(RepairCircuitBoardCommand request, CancellationToken cancellationToken)
+	public async Task<Unit> Handle(RepairCircuitBoardCommand request, CancellationToken cancellationToken)
 	{
 		var circuitBoard = await CircuitBoardFindHelper.GetCircuitBoardAsync(request.CircuitBoardId, _circuitBoardRepository);
 		circuitBoard!.Repair();
 		_historyEventRepository.Add(new HistoryEvent(Guid.NewGuid(), $"Произведен ремонт платы {circuitBoard.Name}.", [circuitBoard.Id]));
 		await _unitOfWork.CommitAsync(cancellationToken);
-		return true;
+		return Unit.Value;
 	}
 	#endregion
 }

@@ -5,7 +5,7 @@ namespace Dispatching.Service.UseCase.AddComponent;
 /// <summary>
 /// Представляет команду добавления элемента на плату.
 /// </summary>
-public class AddComponentForCircuitBoardCommand : IRequest<bool>
+public class AddComponentForCircuitBoardCommand : IRequest
 {
 	#region .ctor
 	/// <summary>

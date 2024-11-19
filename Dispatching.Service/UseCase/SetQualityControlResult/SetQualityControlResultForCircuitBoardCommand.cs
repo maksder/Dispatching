@@ -5,7 +5,7 @@ namespace Dispatching.Service.UseCase.SetQualityControlResult;
 /// <summary>
 /// Представляет команду установки результат контроля качества.
 /// </summary>
-public class SetQualityControlResultForCircuitBoardCommand : IRequest<bool>
+public class SetQualityControlResultForCircuitBoardCommand : IRequest
 {
 	#region .ctor
 	/// <summary>

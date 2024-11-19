@@ -9,7 +9,7 @@ namespace Dispatching.Service.UseCase.SetQualityControlResult;
 /// <summary>
 /// Представляет обработчик команды <see cref="SetQualityControlResultForCircuitBoardCommand" />.
 /// </summary>
-public class AddComponentForCircuitBoardCommandHandler : IRequestHandler<SetQualityControlResultForCircuitBoardCommand, bool>
+public class SetQualityControlResultForCircuitBoardCommandHandler : IRequestHandler<SetQualityControlResultForCircuitBoardCommand>
 {
 	#region Data
 	#region Fields
@@ -21,14 +21,14 @@ public class AddComponentForCircuitBoardCommandHandler : IRequestHandler<SetQual
 
 	#region .ctor
 	/// <summary>
-	/// Инициализирует новый экземпляр класса <see cref="AddComponentForCircuitBoardCommandHandler" />.
+	/// Инициализирует новый экземпляр класса <see cref="SetQualityControlResultForCircuitBoardCommandHandler" />.
 	/// </summary>
 	/// <param name="circuitBoardRepository"><see cref="ICircuitBoardRepository" />.</param>
 	/// <param name="historyEventRepository"><see cref="IHistoryEventRepository" />.</param>
 	/// <param name="unitOfWork"><see cref="UnitOfWork{WriteDbContext}" />.</param>
-	public AddComponentForCircuitBoardCommandHandler(ICircuitBoardRepository circuitBoardRepository,
-													 IHistoryEventRepository historyEventRepository,
-													 UnitOfWork<WriteDbContext> unitOfWork)
+	public SetQualityControlResultForCircuitBoardCommandHandler(ICircuitBoardRepository circuitBoardRepository,
+																IHistoryEventRepository historyEventRepository,
+																UnitOfWork<WriteDbContext> unitOfWork)
 	{
 		ArgumentNullException.ThrowIfNull(circuitBoardRepository);
 		ArgumentNullException.ThrowIfNull(historyEventRepository);
@@ -38,9 +38,9 @@ public class AddComponentForCircuitBoardCommandHandler : IRequestHandler<SetQual
 	}
 	#endregion
 
-	#region IRequestHandler<SetQualityControlResultForCircuitBoardCommand,Unit> members
+	#region IRequestHandler<SetQualityControlResultForCircuitBoardCommand,bool> members
 	/// <inheritdoc />
-	public async Task<bool> Handle(SetQualityControlResultForCircuitBoardCommand request, CancellationToken cancellationToken)
+	public async Task<Unit> Handle(SetQualityControlResultForCircuitBoardCommand request, CancellationToken cancellationToken)
 	{
 		var circuitBoard = await CircuitBoardFindHelper.GetCircuitBoardAsync(request.CircuitBoardId, _circuitBoardRepository);
 		circuitBoard!.SetQualityControlResult(request.QualityControlResult);
@@ -48,7 +48,7 @@ public class AddComponentForCircuitBoardCommandHandler : IRequestHandler<SetQual
 													 $"Установлен результат контроля качества плате {circuitBoard.Name}. Результат: плата {(request.QualityControlResult ? "годная" : "негодная")}.",
 													 [circuitBoard.Id]));
 		await _unitOfWork.CommitAsync(cancellationToken);
-		return true;
+		return Unit.Value;
 	}
 	#endregion
 }

@@ -32,8 +32,9 @@ namespace Dispatching.Service
 					status = StatusCodes.Status409Conflict;
 					message = be.ErrorMessage;
 					break;
-				case EntityNotFoundException _:
+				case EntityNotFoundException ef:
 					status = StatusCodes.Status404NotFound;
+					message = ef.ErrorMessage;
 					break;
 			}
 

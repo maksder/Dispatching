@@ -29,8 +29,7 @@ public class CircuitBoardConfiguration : IEntityTypeConfiguration<CircuitBoard>
 		builder.Property(p => p.Name)
 			   .HasColumnName("name");
 		builder.OwnsMany(
-			p =>
-				p.Components, //Вероятно компонент может быть отдельной сущностью, применимой к разным платам и связь должна быть многие ко многим, но в задании об этом не написано, поэтому сделал так.
+			p => p.Components, 
 			navigationBuilder =>
 			{
 				navigationBuilder.ToTable("circuit_board_components");

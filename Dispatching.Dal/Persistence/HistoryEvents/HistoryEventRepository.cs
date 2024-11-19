@@ -29,10 +29,13 @@ public class HistoryEventRepository : IHistoryEventRepository
 	/// <inheritdoc />
 	public void Add(HistoryEvent historyEvent)
 	{
-		_dbContext.Add(historyEvent);
+		_dbContext.HistoryEvents.Add(historyEvent);
 	}
 
 	/// <inheritdoc />
-	public IReadOnlyCollection<HistoryEvent> FindRange() => throw new NotImplementedException();
+	public IEnumerable<HistoryEvent> FindByParticipants(Guid participantId) =>
+		_dbContext.HistoryEvents.Where(p => p.Participants.Any(t => t == participantId))
+				  .OrderBy(p => p.CreatedDateTime)
+				  .ToList();
 	#endregion
 }

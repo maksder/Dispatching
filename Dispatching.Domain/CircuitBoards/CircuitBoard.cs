@@ -74,7 +74,7 @@ public class CircuitBoard : IEntity
 	/// <exception cref="BusinessException">Если плата в неподходящем статусе.</exception>
 	public void AddComponent(CircuitBoardComponent component)
 	{
-		if (Status != CircuitBoardStatus.Created || Status != CircuitBoardStatus.InWorking)
+		if (Status != CircuitBoardStatus.Created && Status != CircuitBoardStatus.InWorking)
 		{
 			throw new BusinessException($"Невозможно добавить компонент в в плату {Name}. Причина: плата {ErrorHelper.GetStatusNameForError(Status)}.");
 		}
@@ -107,12 +107,7 @@ public class CircuitBoard : IEntity
 	/// <exception cref="BusinessException">Если продукция в неподходящем статусе, либо результат контроля качества "Не годен."</exception>
 	public void Pack()
 	{
-		if (Status != CircuitBoardStatus.InQualityControl)
-		{
-			throw new BusinessException($"Невозможно упаковать плату {Name}. Причина: плата {ErrorHelper.GetStatusNameForError(Status)}.");
-		}
-
-		if (QualityControlResult != CircuitBoards.QualityControlResult.Good)
+		if (Status != CircuitBoardStatus.InQualityControl && QualityControlResult != CircuitBoards.QualityControlResult.Good)
 		{
 			throw new BusinessException($"Невозможно упаковать плату {Name}. Причина: для платы не пройден контроль качества.");
 		}
@@ -125,7 +120,7 @@ public class CircuitBoard : IEntity
 	{
 		if (Status != CircuitBoardStatus.InRepair)
 		{
-			throw new BusinessException($"Невозможно произвести ремонт платы {Name}. Причина: плата {ErrorHelper.GetStatusNameForError(Status)}.");
+			throw new BusinessException($"Невозможно произвести ремонт платы {Name}. Причина: для платы не был произведен контроль качества.");
 		}
 
 		Status = CircuitBoardStatus.InQualityControl;

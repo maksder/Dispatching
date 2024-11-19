@@ -1,4 +1,5 @@
 using Dispatching.Domain.CircuitBoards;
+using Dispatching.Domain.History;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dispatching.Dal;
@@ -24,6 +25,15 @@ public class WriteDbContext : DbContext
 	/// Возвращает платы.
 	/// </summary>
 	public DbSet<CircuitBoard> CircuitBoards
+	{
+		get;
+		private set;
+	}
+
+	/// <summary>
+	/// Возвращает исторические события.
+	/// </summary>
+	public DbSet<HistoryEvent> HistoryEvents
 	{
 		get;
 		private set;

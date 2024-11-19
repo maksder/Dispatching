@@ -13,9 +13,9 @@ public interface IHistoryEventRepository
 	void Add(HistoryEvent historyEvent);
 
 	/// <summary>
-	/// Возвращает события.
+	/// Возвращает события по идентфикатору участника.
 	/// </summary>
 	/// <returns>События.</returns>
-	IReadOnlyCollection<HistoryEvent> FindRange();
+	IEnumerable<HistoryEvent> FindByParticipants(Guid participantId);
 	#endregion
 }

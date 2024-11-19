@@ -9,7 +9,7 @@ namespace Dispatching.Service.UseCase.AddToQualityControl;
 /// <summary>
 /// Представляет обработчик команды <see cref="MakeQualityControlForCircuitBoardCommand" />.
 /// </summary>
-public class MakeQualityControlForCircuitBoardCommandHandler : IRequestHandler<MakeQualityControlForCircuitBoardCommand, bool>
+public class MakeQualityControlForCircuitBoardCommandHandler : IRequestHandler<MakeQualityControlForCircuitBoardCommand>
 {
 	#region Data
 	#region Fields
@@ -40,13 +40,13 @@ public class MakeQualityControlForCircuitBoardCommandHandler : IRequestHandler<M
 
 	#region IRequestHandler<CreateCircuitBoardCommand,Guid> members
 	/// <inheritdoc />
-	public async Task<bool> Handle(MakeQualityControlForCircuitBoardCommand request, CancellationToken cancellationToken)
+	public async Task<Unit> Handle(MakeQualityControlForCircuitBoardCommand request, CancellationToken cancellationToken)
 	{
 		var circuitBoard = await CircuitBoardFindHelper.GetCircuitBoardAsync(request.CircuitBoardId, _circuitBoardRepository);
 		circuitBoard!.MakeQualityControl();
 		_historyEventRepository.Add(new HistoryEvent(Guid.NewGuid(), $"Плата {circuitBoard.Name} произведен контроль качества.", [circuitBoard.Id]));
 		await _unitOfWork.CommitAsync(cancellationToken);
-		return true;
+		return Unit.Value;
 	}
 	#endregion
 }
